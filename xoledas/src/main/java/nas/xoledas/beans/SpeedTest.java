@@ -1,5 +1,7 @@
 package nas.xoledas.beans;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,16 +14,19 @@ public class SpeedTest {
 	private Integer ping;
 	private Integer upload;
 	private Integer download;
+	private Date dateTest;
+	
 	/**
 	 * @param ping
 	 * @param upload
 	 * @param download
 	 */
-	public SpeedTest(Integer ping, Integer upload, Integer download) {
+	public SpeedTest(Integer ping, Integer upload, Integer download, Date dt) {
 		super();
 		this.ping = ping;
 		this.upload = upload;
 		this.download = download;
+		this.dateTest = dt;
 	}
 	/**
 	 * @return the ping
@@ -59,12 +64,22 @@ public class SpeedTest {
 	public void setDownload(Integer download) {
 		this.download = download;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "SpeedTest [ping=" + ping + ", upload=" + upload + ", download=" + download + "]";
+		return "SpeedTest [id=" + id + ", ping=" + ping + ", upload=" + upload + ", download=" + download
+				+ ", dateTest=" + dateTest + "]";
+	}
+	/**
+	 * @return the dateTest
+	 */
+	public Date getDateTest() {
+		return dateTest;
+	}
+	/**
+	 * @param dateTest the dateTest to set
+	 */
+	public void setDateTest(Date dateTest) {
+		this.dateTest = dateTest;
 	}
 	
 	

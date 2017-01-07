@@ -15,7 +15,7 @@ public class NasServlet extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
 		//this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);

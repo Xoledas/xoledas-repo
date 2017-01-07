@@ -41,7 +41,7 @@
 	<dependency>
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-core</artifactId>
-	    <version>5.2.5.Final</version>
+	    <version>5.0.11.Final</version>
 	</dependency>
 
 	
@@ -58,7 +58,7 @@
 	      <artifactId>jetty-maven-plugin</artifactId>
 	      <version>9.4.0.v20161208</version>
 	      <configuration>
-	      	<scanIntervalSeconds>2</scanIntervalSeconds>
+	      	<scanIntervalSeconds>5</scanIntervalSeconds>
 		    <!-- <webApp>
 		      <contextPath>/test</contextPath>
 		    </webApp> -->

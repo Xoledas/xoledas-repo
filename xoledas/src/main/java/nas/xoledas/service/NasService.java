@@ -1,8 +1,11 @@
 package nas.xoledas.service;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import nas.xoledas.beans.SpeedTest;
@@ -36,7 +39,7 @@ public class NasService {
 		  
         session.beginTransaction();
         
-        SpeedTest st = new SpeedTest(ping,up,down);
+        SpeedTest st = new SpeedTest(ping,up,down,new Date());
         Long id = (Long) session.save(st);
       
         session.getTransaction().commit();
@@ -48,9 +51,17 @@ public class NasService {
 		return success;
 	}
 	
-	public ArrayList<SpeedTest> getSpeedtestList() {
+	public List<SpeedTest> getSpeedtestList() {
+		List listST;
 		
-		return new ArrayList();
+		Session sess = HibernateUtils.getSessionFactory().openSession();
+        sess.beginTransaction();
+        
+		Criteria crit = sess.createCriteria(SpeedTest.class);
+		crit.setMaxResults(50);
+		listST = crit.list();
+		
+		return listST;
 	}
 
 }

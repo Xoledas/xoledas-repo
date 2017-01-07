@@ -1,0 +1,1 @@
+curl --request POST 'http://localhost:8080/insertdata' --data "ping=4" --data "up=120" --data "do=550"

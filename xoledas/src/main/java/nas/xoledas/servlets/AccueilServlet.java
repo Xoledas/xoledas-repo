@@ -2,12 +2,14 @@ package nas.xoledas.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nas.xoledas.beans.SpeedTest;
 import nas.xoledas.service.NasService;
 
 public class AccueilServlet extends HttpServlet {
@@ -19,11 +21,10 @@ public class AccueilServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		PrintWriter out = response.getWriter();
+		//PrintWriter out = response.getWriter();
 		
-		//String name = request.getParameter("name"); recupère depuis l'url
-		request.setAttribute("name", "hugo"); 
-		//curl -X POST -F 'ping=10' -F 'up=111' -F 'do=555' http://localhost:8080/insertdata
+		List<SpeedTest> listST = NasService.getInstance().getSpeedtestList();
+		request.setAttribute("listTests", listST);
 		
 		System.out.println("passage dans accueil servlet");
 		
