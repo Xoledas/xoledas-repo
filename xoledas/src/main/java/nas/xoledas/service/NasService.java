@@ -1,5 +1,7 @@
 package nas.xoledas.service;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
@@ -9,8 +11,7 @@ import nas.xoledas.hibernate.HibernateUtils;
 public class NasService {
 	
 	/** Constructeur privé */
-	private NasService()
-	{}
+	private NasService() {}
 	
 	/** Log4j **/
 	final static Logger log = Logger.getLogger(NasService.class);
@@ -19,10 +20,9 @@ public class NasService {
 	private static NasService INSTANCE = null;
  
 	/** Point d'accès pour l'instance unique du singleton */
-	public static NasService getInstance()
-	{			
-		if (INSTANCE == null)
-		{ 	INSTANCE = new NasService();	
+	public static NasService getInstance() {			
+		if (INSTANCE == null) {
+			INSTANCE = new NasService();	
 		}
 		return INSTANCE;
 	}
@@ -42,8 +42,15 @@ public class NasService {
         session.getTransaction().commit();
 
         success = (id != 0) ? true : false;
+        
+        session.close();
 		
 		return success;
+	}
+	
+	public ArrayList<SpeedTest> getSpeedtestList() {
+		
+		return new ArrayList();
 	}
 
 }

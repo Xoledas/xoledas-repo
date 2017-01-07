@@ -17,22 +17,7 @@ public class NasServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
-		PrintWriter out = response.getWriter();
-		
-		//String name = request.getParameter("name"); recupère depuis l'url
-		//request.setAttribute("name", name); envoie à la vue jsp
-		//curl -X POST -F 'ping=10' -F 'up=111' -F 'do=555' http://localhost:8080/insertdata
-				
-		boolean retour = NasService.getInstance().insertData(4,150,650);
-		
-		if (retour) {
-			out.println("OK");
-		} else {
-			out.println("KO");
-		}
-		
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{	
 		//this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);
 	}
 	
