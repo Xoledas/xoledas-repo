@@ -16,6 +16,9 @@ public class SpeedTest {
 	private Integer download;
 	private Date dateTest;
 	
+	public SpeedTest() {
+		super();
+	}
 	/**
 	 * @param ping
 	 * @param upload

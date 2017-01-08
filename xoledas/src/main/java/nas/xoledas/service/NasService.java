@@ -1,5 +1,6 @@
 package nas.xoledas.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +53,8 @@ public class NasService {
 	}
 	
 	public List<SpeedTest> getSpeedtestList() {
-		List listST;
+		List<SpeedTest> listST = new ArrayList<SpeedTest>();
+		SimpleDateFormat df1 = new SimpleDateFormat("yyyy/dd");
 		
 		Session sess = HibernateUtils.getSessionFactory().openSession();
         sess.beginTransaction();
@@ -60,6 +62,10 @@ public class NasService {
 		Criteria crit = sess.createCriteria(SpeedTest.class);
 		crit.setMaxResults(50);
 		listST = crit.list();
+		
+		for (SpeedTest st : listST) {
+			
+		}
 		
 		return listST;
 	}

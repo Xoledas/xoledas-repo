@@ -13,14 +13,14 @@
 	var myChart = new Chart(ctx, {
 		type: 'line',
 		data: {
-			labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
+			labels: ${liste1},
 			datasets: [{
-				label: 'apples',
-				data: [12, 19, 3, 17, 6, 3, 7],
+				label: 'Download',
+				data: ${liste2},
 				backgroundColor: "rgba(153,255,51,0.4)"
 				}, {
-				label: 'oranges',
-				data: [2, 29, 5, 5, 2, 3, 10],
+				label: 'Upload',
+				data: [100, 129, 115, 155, 40],
 				backgroundColor: "rgba(255,153,0,0.4)"
 				}]
 		},

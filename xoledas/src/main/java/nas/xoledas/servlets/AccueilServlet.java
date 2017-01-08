@@ -2,6 +2,7 @@ package nas.xoledas.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,11 +23,30 @@ public class AccueilServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		//PrintWriter out = response.getWriter();
+		List<String> lx = new ArrayList<String>();
+		List<Integer> vDown = new ArrayList<Integer>();
 		
 		List<SpeedTest> listST = NasService.getInstance().getSpeedtestList();
 		request.setAttribute("listTests", listST);
 		
-		System.out.println("passage dans accueil servlet");
+		lx.add("'03/01'");
+		lx.add("'04/01'");
+		lx.add("'05/01'");
+		lx.add("'06/01'");
+		lx.add("'07/01'");
+		
+		vDown.add(200);
+		vDown.add(400);
+		vDown.add(500);
+		vDown.add(700);
+		vDown.add(600);
+		
+		request.setAttribute("liste1", lx);
+		request.setAttribute("liste2", vDown);
+		
+		System.out.println(vDown);
+		
+		System.out.println("passage dans accueil servlet "+listST);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);
 	}
