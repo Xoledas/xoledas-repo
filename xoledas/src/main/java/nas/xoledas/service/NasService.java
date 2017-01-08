@@ -3,6 +3,7 @@ package nas.xoledas.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import org.hibernate.Session;
 
 import nas.xoledas.beans.SpeedTest;
 import nas.xoledas.hibernate.HibernateUtils;
+import nas.xoledas.utils.NasUtils;
 
 public class NasService {
 	
@@ -33,41 +35,70 @@ public class NasService {
 	
 	public boolean insertData(Integer ping, Integer up, Integer down) {
 		boolean success = false;
+		SpeedTest st = null;
 		
-		log.info("HLA-passage dans ma classe service");
+		log.info("Entrée dans la fonction d'enregistrement");
 		
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		  
-        session.beginTransaction();
+		try {
+			//ouverture session hibernate
+			Session session = HibernateUtils.getSessionFactory().openSession(); 
+	        session.beginTransaction();
+	        
+	        //création de l'objet speed test pour enregistrer en bdd les données du test effectué
+	        st = new SpeedTest(ping,up,down,new Date());
+	        Long id = (Long) session.save(st);
+	      
+	        session.getTransaction().commit();
+	
+	        //paramétrage de la variable de réussite, pour le retour vers le script shell
+	        success = (id != 0) ? true : false;
+	        
+	        session.close();
         
-        SpeedTest st = new SpeedTest(ping,up,down,new Date());
-        Long id = (Long) session.save(st);
-      
-        session.getTransaction().commit();
-
-        success = (id != 0) ? true : false;
-        
-        session.close();
+		} catch (Exception e) {
+			log.error("Erreur lors de la création ou l'enregistrement de l'objet. Erreur : " + e.getMessage());
+		}
+		
+		log.info("Fin de l'enregistrement d'un test en base de données. ST : " + st.toString());
 		
 		return success;
 	}
 	
-	public List<SpeedTest> getSpeedtestList() {
+	public HashMap<String,Object> getSpeedtestList() {
+		//Liste contenant les speed tests récupérés deluis la bdd
 		List<SpeedTest> listST = new ArrayList<SpeedTest>();
-		SimpleDateFormat df1 = new SimpleDateFormat("yyyy/dd");
+		//map de retour final des objets bien formatés
+		HashMap<String,Object> formattedReturnMap = null;
 		
-		Session sess = HibernateUtils.getSessionFactory().openSession();
-        sess.beginTransaction();
-        
-		Criteria crit = sess.createCriteria(SpeedTest.class);
-		crit.setMaxResults(50);
-		listST = crit.list();
+		log.info("Début de traitement récupération & formattage liste speedtest");
 		
-		for (SpeedTest st : listST) {
-			
+		try {
+			//ouverture session hibernate
+			Session sess = HibernateUtils.getSessionFactory().openSession();
+	        sess.beginTransaction();
+	        
+	        //requête pour récupérer les speedtests (tous depuis 1 mois, ou si paramètres en fonction des paramètres)
+			Criteria crit = sess.createCriteria(SpeedTest.class);
+			crit.setMaxResults(50);
+			listST = crit.list();
+		} catch (Exception e) {
+			log.error("Erreur lors de la récupération des tests en bdd. Error : " + e.getMessage());
 		}
 		
-		return listST;
+		try {
+			//appel de la classe utilitaire qui va transformer les objets speedtest en une map avec
+			//valeurs séparées pour bien être intégrées au graphique chart.js
+			if (listST != null && listST.size() > 0) {
+				NasUtils utils = new NasUtils();
+				formattedReturnMap = utils.formatListSpeedTest(listST);
+			}
+		} catch (Exception e) {
+			log.error("Erreur lors du traitement de formattage des speedtests. Error : " + e.getMessage());
+		}
+		
+		log.info("Fin récupération et traitement liste speed test. Liste : " + formattedReturnMap.toString() );
+		
+		return formattedReturnMap;
 	}
 
 }
