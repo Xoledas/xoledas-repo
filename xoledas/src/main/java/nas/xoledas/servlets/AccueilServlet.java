@@ -2,15 +2,14 @@ package nas.xoledas.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import nas.xoledas.beans.SpeedTest;
+import org.apache.log4j.Logger;
+
 import nas.xoledas.service.NasService;
 
 public class AccueilServlet extends HttpServlet {
@@ -19,36 +18,25 @@ public class AccueilServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/** Log4j **/
+	final static Logger log = Logger.getLogger(NasService.class);
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		//PrintWriter out = response.getWriter();
-		List<String> lx = new ArrayList<String>();
-		List<Integer> vDown = new ArrayList<Integer>();
+		PrintWriter out = response.getWriter();
 		
-		List<SpeedTest> listST = NasService.getInstance().getSpeedtestList();
-		request.setAttribute("listTests", listST);
+		try {
 		
-		lx.add("'03/01'");
-		lx.add("'04/01'");
-		lx.add("'05/01'");
-		lx.add("'06/01'");
-		lx.add("'07/01'");
-		
-		vDown.add(200);
-		vDown.add(400);
-		vDown.add(500);
-		vDown.add(700);
-		vDown.add(600);
-		
-		request.setAttribute("liste1", lx);
-		request.setAttribute("liste2", vDown);
-		
-		System.out.println(vDown);
-		
-		System.out.println("passage dans accueil servlet "+listST);
-		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);
+			HashMap<String,Object> formattedSpeedTMap = NasService.getInstance().getSpeedtestList();
+			request.setAttribute("formattedMap", formattedSpeedTMap);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+			log.error("Erreur lors du chargement de la page. Error : " + e.getMessage());
+			out.println("Oups... Une erreur est survenue.");
+		}
+	
 	}
 	
 	

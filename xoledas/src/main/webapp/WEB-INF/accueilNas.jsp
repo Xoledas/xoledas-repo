@@ -12,12 +12,10 @@
 		
 		<div class="main-container">
 		
-			<c:out value="bonjour"/><br>
-			<c:out value="${name}"/><br>
 			<!--<c:out value="${speedt.download}"/>-->
 			
 			<c:set var="maVariable" value="testtest"/>
-		    <c:import url="structure/canvas.jsp"></c:import> 
+		    <c:import url="structure/accueil-canvas.jsp"></c:import> 
 	    
 	    </div>
 	    
