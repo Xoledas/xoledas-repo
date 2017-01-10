@@ -8,6 +8,8 @@
 <canvas id="pingChart" height="300" width="1000px"></canvas>
 
 <script>
+	//S'il y a des erreurs sur le unexpected token {, pas de problème ça marche.
+
 	var ctx_d = document.getElementById('downChart');
 	var ctx_u = document.getElementById('upChart');
 	var ctx_p = document.getElementById('pingChart');

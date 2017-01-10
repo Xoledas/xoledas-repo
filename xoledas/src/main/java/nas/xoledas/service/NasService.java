@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import nas.xoledas.beans.SpeedTest;
 import nas.xoledas.hibernate.HibernateUtils;
@@ -22,7 +23,7 @@ public class NasService {
 	/** Log4j **/
 	final static Logger log = Logger.getLogger(NasService.class);
  
-	/** Instance unique non préinitialisée */
+	/** Instance unique préinitialisée */
 	private static NasService INSTANCE = null;
  
 	/** Point d'accès pour l'instance unique du singleton */
@@ -64,11 +65,15 @@ public class NasService {
 		return success;
 	}
 	
-	public HashMap<String,Object> getSpeedtestList() {
+	public HashMap<String,Object> getSpeedtestList(String dateD,String dateF) {
 		//Liste contenant les speed tests récupérés deluis la bdd
 		List<SpeedTest> listST = new ArrayList<SpeedTest>();
 		//map de retour final des objets bien formatés
 		HashMap<String,Object> formattedReturnMap = null;
+		//date début et fin, si présentes
+		Date dated = null;
+		Date datef = null;
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
 		log.info("Début de traitement récupération & formattage liste speedtest");
 		
@@ -77,10 +82,27 @@ public class NasService {
 			Session sess = HibernateUtils.getSessionFactory().openSession();
 	        sess.beginTransaction();
 	        
+	        //traitement des paramètres de dates
+	        if (dateD != null && dateD != "") {
+	        	System.out.println("date d :"+dateD);
+	        	dated = df.parse(dateD);
+	        }
+	        if (dateF != null && dateF != "") {
+	        	System.out.println("date f :"+dateF);
+	        	datef = df.parse(dateF);
+	        }
+	        
 	        //requête pour récupérer les speedtests (tous depuis 1 mois, ou si paramètres en fonction des paramètres)
 			Criteria crit = sess.createCriteria(SpeedTest.class);
 			crit.setMaxResults(50);
+			if (dated != null) {
+				crit.add(Restrictions.ge("dateTest", dated));
+			}
+			if (datef != null) {
+				crit.add(Restrictions.le("dateTest", datef));
+			}
 			listST = crit.list();
+			
 		} catch (Exception e) {
 			log.error("Erreur lors de la récupération des tests en bdd. Error : " + e.getMessage());
 		}

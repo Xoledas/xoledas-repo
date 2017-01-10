@@ -1,4 +1,5 @@
 .body { margin:0; font-family:"Gill Sans", sans-serif; }
+.colortext { color:#154E7F; }
 
 /** Menu css **/
 
@@ -59,4 +60,34 @@
 	box-shadow: 0px 0px 5px #154E7F;
 }
 
+
+/** Page de graphiques détaillées **/
+
+#searchform fieldset  {
+	border:1px solid #154E7F;
+	color:#154E7F;
+	height:50px;
+}
+
+.searchform-item {
+	float:left;
+	margin-right:120px;
+}
+
+
+
+
+/** Boutons **/
+
+.submit-button {
+	width:150px;
+	height:25px;
+	border:none;
+	background-color:#154E7F;
+	color:white;
+	font-weight:bold;
+	box-shadow:0px 0px 5px #154E7F;
+}
+
+.submit-button:hover { background-color:white; color:#154E7F; font-weight:bold; cursor:pointer; }
 

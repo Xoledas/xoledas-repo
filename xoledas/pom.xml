@@ -59,9 +59,9 @@
 	      <version>9.4.0.v20161208</version>
 	      <configuration>
 	      	<scanIntervalSeconds>5</scanIntervalSeconds>
-		    <!-- <webApp>
-		      <contextPath>/test</contextPath>
-		    </webApp> -->
+		    <webApp>
+		      <contextPath>/nas-app</contextPath>
+ 		    </webApp>
 	        <httpConnector>
 	          <!--host>localhost</host-->
 	          <port>8080</port>

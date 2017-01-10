@@ -21,7 +21,7 @@
 	</appender>
 	
 	<logger name="nas.xoledas">
-        <appender-ref ref="file"/>
+        <appender-ref ref="console"/>
         <level value="INFO" />
     </logger>
 

@@ -20,7 +20,7 @@ public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/** Log4j **/
-	final static Logger log = Logger.getLogger(NasService.class);
+	final static Logger log = Logger.getLogger(AccueilServlet.class);
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
@@ -28,8 +28,9 @@ public class AccueilServlet extends HttpServlet {
 		
 		try {
 		
-			HashMap<String,Object> formattedSpeedTMap = NasService.getInstance().getSpeedtestList();
+			HashMap<String,Object> formattedSpeedTMap = NasService.getInstance().getSpeedtestList(null,null);
 			request.setAttribute("formattedMap", formattedSpeedTMap);
+			log.info("Fin traitement métier accueilservlet");
 			this.getServletContext().getRequestDispatcher("/WEB-INF/accueilNas.jsp").forward(request, response);
 			
 		} catch (Exception e) {

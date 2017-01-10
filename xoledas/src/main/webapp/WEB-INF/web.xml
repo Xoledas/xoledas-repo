@@ -23,6 +23,15 @@
     <url-pattern>/accueil</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>detailsServlet</servlet-name>
+    <servlet-class>nas.xoledas.servlets.GraphiquesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>detailsServlet</servlet-name>
+    <url-pattern>/details</url-pattern>
+  </servlet-mapping>
+  
    <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
