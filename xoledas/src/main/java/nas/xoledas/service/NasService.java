@@ -103,6 +103,8 @@ public class NasService {
 			}
 			listST = crit.list();
 			
+			sess.close();
+			
 		} catch (Exception e) {
 			log.error("Erreur lors de la récupération des tests en bdd. Error : " + e.getMessage());
 		}
